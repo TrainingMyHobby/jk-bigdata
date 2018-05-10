@@ -3,21 +3,15 @@ package jk.bd.app.dto
 import org.joda.time.DateTime
 import jk.bd.app.util.AppUtil
 
-class IngestCtxtInfo() {
+case class IngestCtxtInfo(ingestConfig: UserConfig, ingestDateTime: DateTime) {
 
-  private var ingestConfig: UserConfig = _
-  private var ingestDateTime: DateTime = null
   private val ingestDateFormat = AppUtil.buildIngestDateTimeFormat(ingestDateTime)
 
   // *****************************************************
   // START Get & Set Methods for class members
   // *****************************************************
 
-  def setUserConfig(ingestUserConfig: UserConfig): Unit = this.ingestConfig = ingestUserConfig
-
   def getUserConfig() = ingestConfig
-
-  def setIngestDateTime(ingestDateTime: DateTime): Unit = this.ingestDateTime = ingestDateTime
 
   def getIngestDateTime() = ingestDateTime
 
@@ -38,6 +32,8 @@ class IngestCtxtInfo() {
   def getIngestCommandSuffix(dbName: String, tableName: String) = ingestConfig.getConfig("INGEST_CMD_SUFFIX", "")
 
   def getDestLndBasePath() = ingestConfig.getConfig("DEST_BASE_PATH")
+
+  def isOneTimeIngestOnly(): Boolean = "true".equalsIgnoreCase(ingestConfig.getConfig("ONE_TIME_INGEST_ONLY"))
 
   def buildTableIngestDestPath(dbName: String, tableName: String) = getDestLndBasePath() + "/" + dbName + "/" + tableName
 
