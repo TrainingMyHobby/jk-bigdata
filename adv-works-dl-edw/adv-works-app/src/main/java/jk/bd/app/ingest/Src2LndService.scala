@@ -1,6 +1,6 @@
 package jk.bd.app.ingest
 
-import jk.bd.app.dto.ATableIngestInfo
+import jk.bd.app.dto.TableIngestInfo
 import jk.bd.app.dto.IngestCtxtInfo
 import jk.bd.app.util.IngestUtil
 
@@ -20,7 +20,7 @@ class Src2LndIngestService {
       case (srcTblName, indexNo) => {
         val destTblName = destTableNames(indexNo)
 
-        val aTblIngestInfo = new ATableIngestInfo(srcDbName, destDbName, srcTblName, destTblName, ingestCtxtInfo.ingestDateTime)
+        val aTblIngestInfo = new TableIngestInfo(srcDbName, destDbName, srcTblName, destTblName, ingestCtxtInfo.ingestDateTime)
         aTblIngestInfo.setOneTimeIngestOnly(oneTimeIngestOnly)
 
         executeATableIngest(aTblIngestInfo, ingestCtxtInfo)
@@ -28,14 +28,14 @@ class Src2LndIngestService {
     }
   }
 
-  private def executeATableIngest(aTblIngestInfo: ATableIngestInfo, ingestCtxtInfo: IngestCtxtInfo): Unit = {
+  private def executeATableIngest(aTblIngestInfo: TableIngestInfo, ingestCtxtInfo: IngestCtxtInfo): Unit = {
 
     val ingestCmd = ingestCtxtInfo.getIngestCommand(aTblIngestInfo.destDbName, aTblIngestInfo.destTableName)
 
     IngestUtil.replaceIngestCmdVariableWithValues(ingestCmd, aTblIngestInfo, ingestCtxtInfo)
   }
 
-  private def determineAndPopulateATableIngestBusinessDate(aTblIngestInfo: ATableIngestInfo, ingestCtxtInfo: IngestCtxtInfo): Unit = {
+  private def determineAndPopulateATableIngestBusinessDate(aTblIngestInfo: TableIngestInfo, ingestCtxtInfo: IngestCtxtInfo): Unit = {
 
   }
 

@@ -2,7 +2,7 @@ package jk.bd.app.dto
 
 import org.joda.time.DateTime
 
-case class ATableIngestInfo(srcDbName: String, destDbName: String, srcTableName: String, destTableName: String, ingestDateTime: DateTime) {
+case class TableIngestInfo(srcDbName: String, destDbName: String, srcTableName: String, destTableName: String, ingestDateTime: DateTime) {
 
   var ingestCommand: String = _
 

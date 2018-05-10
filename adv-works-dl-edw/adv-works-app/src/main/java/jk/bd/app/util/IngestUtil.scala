@@ -3,7 +3,7 @@ package jk.bd.app.util
 import org.slf4j.LoggerFactory
 
 import jk.bd.app.common.IngestConstants
-import jk.bd.app.dto.ATableIngestInfo
+import jk.bd.app.dto.TableIngestInfo
 import jk.bd.app.dto.IngestCtxtInfo
 
 object IngestUtil {
@@ -13,7 +13,7 @@ object IngestUtil {
   val INGEST_VAR_NAMES = Seq(IngestConstants.SRC_DB_NAME, IngestConstants.SRC_TABLE_NAMES_CSV, IngestConstants.DEST_DB_NAME, IngestConstants.DEST_TABLE_NAMES_CSV,
     IngestConstants.DEST_BASE_PATH, IngestConstants.INGEST_CMD, IngestConstants.INGEST_CMD_SUFFIX)
 
-  def replaceIngestCmdVariableWithValues(ingestCmd: String, aTblIngestInfo: ATableIngestInfo, ingestCtxtInfo: IngestCtxtInfo): String = {
+  def replaceIngestCmdVariableWithValues(ingestCmd: String, aTblIngestInfo: TableIngestInfo, ingestCtxtInfo: IngestCtxtInfo): String = {
 
     var ingestCmdUpdated = ingestCmd
     ingestCmdUpdated = fillDbAndTableNames(ingestCmdUpdated, aTblIngestInfo, ingestCtxtInfo)
@@ -28,7 +28,7 @@ object IngestUtil {
     ingestCmdUpdated
   }
 
-  private def fillDbAndTableNames(ingestCmdUpdated: String, aTblIngestInfo: ATableIngestInfo, ingestCtxtInfo: IngestCtxtInfo): String = {
+  private def fillDbAndTableNames(ingestCmdUpdated: String, aTblIngestInfo: TableIngestInfo, ingestCtxtInfo: IngestCtxtInfo): String = {
 
     var ingestCmdUpdatedVal = ingestCmdUpdated.replaceAll(IngestConstants.SRC_DB_NAME, aTblIngestInfo.srcDbName)
     ingestCmdUpdatedVal = ingestCmdUpdatedVal.replaceAll(IngestConstants.DEST_DB_NAME, aTblIngestInfo.destDbName)
@@ -39,7 +39,7 @@ object IngestUtil {
     ingestCmdUpdatedVal
   }
 
-  private def fillIngestDateValues(ingestCmdUpdated: String, aTblIngestInfo: ATableIngestInfo, ingestCtxtInfo: IngestCtxtInfo): String = {
+  private def fillIngestDateValues(ingestCmdUpdated: String, aTblIngestInfo: TableIngestInfo, ingestCtxtInfo: IngestCtxtInfo): String = {
 
     var ingestCmdUpdatedVal = ingestCmdUpdated.replaceAll(IngestConstants.INGEST_DATE_YYYY, aTblIngestInfo.ingestDateTime.getYear() + "")
 
@@ -60,7 +60,7 @@ object IngestUtil {
     ingestCmdUpdatedVal
   }
 
-  private def fillVariableValue(varName: String, ingestCmdUpdated: String, aTblIngestInfo: ATableIngestInfo, ingestCtxtInfo: IngestCtxtInfo): String = {
+  private def fillVariableValue(varName: String, ingestCmdUpdated: String, aTblIngestInfo: TableIngestInfo, ingestCtxtInfo: IngestCtxtInfo): String = {
 
     var ingestCmdUpdatedVal = ingestCmdUpdated.replaceAll(varName, ingestCtxtInfo.ingestConfig.getConfig(varName))
 
